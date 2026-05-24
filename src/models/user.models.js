@@ -47,7 +47,7 @@ const userSchema = new Schema ({
 },{timestamps: true})
 
 userSchema.pre("save", async function (next) {
-    if(!this.modified("password")) return next();   //->this condition helps in avoiding the recursive execution of 'password encryption' after change in any field userSchema! 
+    if(!this.modified("password")) return next();   //->this condition helps in avoiding the recursive execution of 'password encryption' after change in any field of userSchema! 
 
     this.password = bcrypt.hash(this.password, 10)
     next()
