@@ -49,7 +49,7 @@ const userSchema = new Schema ({
 userSchema.pre("save", async function (next) {
     if(!this.modified("password")) return next();   //->this condition helps in avoiding the recursive execution of 'password encryption' after change in any field of userSchema! 
 
-    this.password = bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
@@ -90,4 +90,4 @@ userSchema.methods.generateRefreshToken = function(){
     )
 }
 
-export const User = mongoose.model('User', 'userSchema')
+export const User = mongoose.model('User', userSchema)
